@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "csharp-rag": {
+      "command": "dotnet",
+      "args": ["D:\\Projects\\CSharpRagService\\CSharpMcpService\\bin\\Debug\\net8.0-temp\\CSharpMcpService.dll"],
+      "env": {
+        "USE_ADVANCED_EMBEDDING": "true"
+      }
+    }
+  }
+}
+
+/*
+临时版本配置说明:
+
+如果主版本DLL文件被锁定，可以使用这个临时版本的配置。
+
+临时版本位于:
+D:\Projects\CSharpRagService\CSharpMcpService\bin\Debug\net8.0-temp\CSharpMcpService.dll
+
+构建临时版本:
+cd CSharpMcpService
+dotnet build --configuration Debug --output ./bin/Debug/net8.0-temp
+*/

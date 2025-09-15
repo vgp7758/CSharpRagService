@@ -1,0 +1,58 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Extract version
+      id: version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Restore dependencies
+      run: dotnet restore CSharpMcpService/CSharpMcpService.csproj
+
+    - name: Build
+      run: dotnet build CSharpMcpService/CSharpMcpService.csproj --no-restore --configuration Release
+
+    - name: Publish
+      run: dotnet publish CSharpMcpService/CSharpMcpService.csproj --configuration Release --output ./publish --self-contained true -r win-x64 /p:PublishSingleFile=true
+
+    - name: Package
+      run: |
+        Compress-Archive -Path ./publish/* -DestinationPath CSharpRagService-v${{ steps.version.outputs.VERSION }}-win-x64.zip
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ github.ref }}
+        name: Release v${{ steps.version.outputs.VERSION }}
+        body: |
+          C# MCP Service Release v${{ steps.version.outputs.VERSION }}
+
+          ## Changes
+          - Automated release from GitHub Actions
+
+          ## Installation
+          1. Download the zip file
+          2. Extract to your desired location
+          3. Run `CSharpMcpService.exe`
+
+          ## Documentation
+          See README.md for detailed usage instructions
+        files: |
+          CSharpRagService-v${{ steps.version.outputs.VERSION }}-win-x64.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

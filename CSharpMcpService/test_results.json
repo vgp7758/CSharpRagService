@@ -1,0 +1,69 @@
+{
+  "projectInfo": {
+    "projectPath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\GeneratorApp.csproj",
+    "assemblyName": "GeneratorApp",
+    "targetFramework": "net8.0",
+    "outputPath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\bin\\Debug",
+    "rootNamespace": "GeneratorApp",
+    "sourceFiles": [
+      "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\Program.cs"
+    ],
+    "references": [],
+    "packages": [
+      {
+        "name": "Newtonsoft.Json",
+        "version": "13.0.3"
+      }
+    ],
+    "properties": {}
+  },
+  "symbolCount": 4,
+  "symbolsByType": {
+    "Class": 3,
+    "Method": 1
+  },
+  "sampleSymbols": [
+    {
+      "name": "LanguageConfig",
+      "kind": 0,
+      "namespace": "BitRPC.GeneratorApp",
+      "filePath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\Program.cs",
+      "lineNumber": 10,
+      "signature": "public class LanguageConfig\n    {\n        public string Name { get; set; }\n        public bool Enabled { get; set; }\n        public string Namespace { get; set; }\n        public string RuntimePath { get; set; }\n    }"
+    },
+    {
+      "name": "GeneratorConfig",
+      "kind": 0,
+      "namespace": "BitRPC.GeneratorApp",
+      "filePath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\Program.cs",
+      "lineNumber": 18,
+      "signature": "public class GeneratorConfig\n    {\n        public string ProtocolFile { get; set; }\n        public string OutputDirectory { get; set; }\n        public List\u003CLanguageConfig\u003E Languages { get; set; }\n    }"
+    },
+    {
+      "name": "Program",
+      "kind": 0,
+      "namespace": "BitRPC.GeneratorApp",
+      "filePath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\Program.cs",
+      "lineNumber": 25,
+      "signature": "class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.WriteLine(\u0022BitRPC Protocol Generator\u0022);\n            Console.WriteLine(\u0022===========================\u0022);\n\n            string configPath = \u0022generator-config.json\u0022;\n            if (args.Length \u003E 0)\n            {\n                configPath = args[0];\n            }\n\n            if (!File.Exists(configPath))\n            {\n                Console.WriteLine($\u0022Error: Config file \u0027{configPath}\u0027 not found.\u0022);\n                return;\n            }\n\n            try\n            {\n                var configContent = File.ReadAllText(configPath);\n                var config = JsonConvert.DeserializeObject\u003CGeneratorConfig\u003E(configContent);\n\n                if (!File.Exists(config.ProtocolFile))\n                {\n                    Console.WriteLine($\u0022Error: Protocol file \u0027{config.ProtocolFile}\u0027 not found.\u0022);\n                    return;\n                }\n\n                var generator = new ProtocolGenerator();\n                \n                var optionsList = new List\u003CGenerationOptions\u003E();\n                \n                foreach (var lang in config.Languages)\n                {\n                    if (lang.Enabled)\n                    {\n                        var options = new GenerationOptions\n                        {\n                            Language = (TargetLanguage)Enum.Parse(typeof(TargetLanguage), lang.Name, true),\n                            OutputDirectory = Path.Combine(config.OutputDirectory, lang.Name),\n                            Namespace = lang.Namespace,\n                            GenerateSerialization = true,\n                            GenerateClientServer = true,\n                            GenerateFactories = true\n                        };\n                        \n                        optionsList.Add(options);\n                    }\n                }\n\n                generator.GenerateMultiple(config.ProtocolFile, optionsList);\n\n                Console.WriteLine($\u0022Successfully generated code for \u0027{config.ProtocolFile}\u0027\u0022);\n                Console.WriteLine($\u0022Output directory: {config.OutputDirectory}\u0022);\n                \n                var generatedLanguages = new List\u003Cstring\u003E();\n                foreach (var lang in config.Languages)\n                {\n                    if (lang.Enabled)\n                    {\n                        generatedLanguages.Add(lang.Name);\n                    }\n                }\n                Console.WriteLine($\u0022Generated languages: {string.Join(\u0022, \u0022, generatedLanguages)}\u0022);\n            }\n            catch (Exception ex)\n            {\n                Console.WriteLine($\u0022Error: {ex.Message}\u0022);\n                Console.WriteLine(ex.StackTrace);\n            }\n        }\n    }"
+    },
+    {
+      "name": "Main",
+      "kind": 4,
+      "namespace": "BitRPC.GeneratorApp",
+      "filePath": "D:\\Projects\\CSharpRagService\\Example\\GeneratorApp\\Program.cs",
+      "lineNumber": 27,
+      "signature": "static void Main(string[] args)\n        {\n            Console.WriteLine(\u0022BitRPC Protocol Generator\u0022);\n            Console.WriteLine(\u0022===========================\u0022);\n\n            string configPath = \u0022generator-config.json\u0022;\n            if (args.Length \u003E 0)\n            {\n                configPath = args[0];\n            }\n\n            if (!File.Exists(configPath))\n            {\n                Console.WriteLine($\u0022Error: Config file \u0027{configPath}\u0027 not found.\u0022);\n                return;\n            }\n\n            try\n            {\n                var configContent = File.ReadAllText(configPath);\n                var config = JsonConvert.DeserializeObject\u003CGeneratorConfig\u003E(configContent);\n\n                if (!File.Exists(config.ProtocolFile))\n                {\n                    Console.WriteLine($\u0022Error: Protocol file \u0027{config.ProtocolFile}\u0027 not found.\u0022);\n                    return;\n                }\n\n                var generator = new ProtocolGenerator();\n                \n                var optionsList = new List\u003CGenerationOptions\u003E();\n                \n                foreach (var lang in config.Languages)\n                {\n                    if (lang.Enabled)\n                    {\n                        var options = new GenerationOptions\n                        {\n                            Language = (TargetLanguage)Enum.Parse(typeof(TargetLanguage), lang.Name, true),\n                            OutputDirectory = Path.Combine(config.OutputDirectory, lang.Name),\n                            Namespace = lang.Namespace,\n                            GenerateSerialization = true,\n                            GenerateClientServer = true,\n                            GenerateFactories = true\n                        };\n                        \n                        optionsList.Add(options);\n                    }\n                }\n\n                generator.GenerateMultiple(config.ProtocolFile, optionsList);\n\n                Console.WriteLine($\u0022Successfully generated code for \u0027{config.ProtocolFile}\u0027\u0022);\n                Console.WriteLine($\u0022Output directory: {config.OutputDirectory}\u0022);\n                \n                var generatedLanguages = new List\u003Cstring\u003E();\n                foreach (var lang in config.Languages)\n                {\n                    if (lang.Enabled)\n                    {\n                        generatedLanguages.Add(lang.Name);\n                    }\n                }\n                Console.WriteLine($\u0022Generated languages: {string.Join(\u0022, \u0022, generatedLanguages)}\u0022);\n            }\n            catch (Exception ex)\n            {\n                Console.WriteLine($\u0022Error: {ex.Message}\u0022);\n                Console.WriteLine(ex.StackTrace);\n            }\n        }"
+    }
+  ],
+  "databaseStats": {
+    "totalSymbols": 4,
+    "projectStats": {
+      "GeneratorApp": 4
+    },
+    "typeStats": {
+      "Class": 3,
+      "Method": 1
+    }
+  }
+}

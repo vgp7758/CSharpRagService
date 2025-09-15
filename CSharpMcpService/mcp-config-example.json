@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "csharp-rag": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "path/to/CSharpMcpService.csproj",
+        "--project=MyProject.csproj"
+      ],
+      "env": {
+        "DEFAULT_PROJECT_NAME": "MyProject.csproj",
+        "USE_ADVANCED_EMBEDDING": "false"
+      }
+    }
+  }
+}

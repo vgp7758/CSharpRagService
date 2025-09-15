@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Parser\PDLParser.cs" />
+    <Compile Include="..\Generator\CodeGeneratorCore.cs" />
+    <Compile Include="..\Generator\CSharpCodeGenerator.cs" />
+    <Compile Include="..\Generator\PythonCodeGenerator.cs" />
+    <Compile Include="..\Generator\CppCodeGenerator.cs" />
+    <Compile Include="..\Serialization\BitMaskSerialization.cs" />
+    <Compile Include="..\Client\RpcClient.cs" />
+    <Compile Include="..\Server\RpcServer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+{
+  "testProject": "GeneratorApp",
+  "performance": {
+    "parallelAnalysisTime": "1 ms",
+    "cacheHitRate": "N/A",
+    "symbolsCount": 11
+  },
+  "advancedSearchResults": {
+    "patternSearchCount": 5,
+    "dependencySearchCount": 13,
+    "callChainSearchCount": 6,
+    "smartSearchCount": 5
+  },
+  "databaseStats": {
+    "totalSymbols": 11,
+    "typeStats": {
+      "Property": 7,
+      "Method": 1,
+      "Class": 3
+    }
+  },
+  "featuresDemonstrated": [
+    "Parallel File Analysis",
+    "Embedding Caching",
+    "Vector Database Storage",
+    "Pattern-based Search",
+    "Dependency Relationship Search",
+    "Call Chain Analysis",
+    "Smart Code Search"
+  ]
+}
