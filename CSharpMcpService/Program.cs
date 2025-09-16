@@ -20,11 +20,11 @@ public class Program
         builder.Logging.SetMinimumLevel(LogLevel.Information);
 
         // Get configuration
-        var useAdvancedEmbedding = args.Contains("--advanced-embedding") ||
+        var useAdvancedEmbedding = args.Contains("advanced-embedding") ||
                                    Environment.GetEnvironmentVariable("USE_ADVANCED_EMBEDDING") == "true";
 
         // Get default project name from environment or args
-        _defaultProjectName = args.FirstOrDefault(a => a.StartsWith("--project="))?.Substring("--project=".Length);
+        _defaultProjectName = args.FirstOrDefault(a => a.StartsWith("project="))?.Substring("project=".Length);
 
         // Register services with factory
         builder.Services.AddSingleton<IProjectAnalyzer, SimpleProjectAnalyzer>();
@@ -93,8 +93,11 @@ public class Program
             {
                 // Read JSON-RPC request from stdin
                 var line = await reader.ReadLineAsync();
-                if (line == null) break;
-
+                if (string.IsNullOrEmpty(line))
+                {
+                    await Task.Delay(100);
+                    continue;
+                }
                 logger.LogDebug("Received request: {Request}", line);
 
                 var request = JsonSerializer.Deserialize<JsonElement>(line);
