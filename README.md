@@ -1,6 +1,15 @@
-# C# MCP Service
+# CSharpRagService · C# 代码语义检索 MCP 服务（RAG + Roslyn + Embedding）
+
+> 让 AI Agent 能"语义理解"大型 C# 代码库：把代码符号化、向量化，通过 MCP 提供代码语义检索（RAG），配合 Agent 高效处理大型 C# 项目。
 
 一个专门用于分析C#项目的MCP (Model Context Protocol) 服务，通过MSBuild API获取项目元数据，使用Roslyn进行代码符号化分析，并构建embedding模型进行语义搜索。支持自动增量更新和实时项目监控。
+
+## 📚 相关文档
+
+- [MCP 使用指南](MCP使用指南.md) — 在 MCP 客户端中如何接入与使用
+- [增量更新实现示例](增量更新实现示例.md) — 文件监控 + 增量符号更新的实现细节
+- [项目状态总结](项目状态总结.md) — 当前实现状态与路线图
+- [CHANGELOG](CHANGELOG.md) — 更新记录
 
 ## 功能特性
 
